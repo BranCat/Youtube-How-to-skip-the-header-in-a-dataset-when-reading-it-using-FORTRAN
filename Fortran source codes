@@ -1,0 +1,25 @@
+!! This program shows how to skip the first line when reading file
+program skip_first_line
+   implicit none
+   !! Declaire necessary parameters   
+   integer :: num = 365, i
+   character (len = 200) :: name_file 
+
+   integer, allocatable :: day_num(:)
+   real(kind = 8), allocatable :: temp_min(:), temp_max(:)
+   allocate(day_num(num), temp_min(num), temp_max(num))
+   
+   !! Read file
+   name_file = 'calgary temperature 2019.txt'  
+   open(2, file = name_file)
+   
+   !! Skip the first line
+   read(2, '(A)'), name_file     
+   
+   !! Use a loop to read data in the three columns
+   do i = 1, num
+       read(2,*) day_num(i), temp_min(i), temp_max(i)   ! Read the data
+       print*, day_num(i), temp_min(i), temp_max(i)     ! Print out the results   
+   end do
+   deallocate(day_num, temp_min, temp_max)
+end program
